@@ -37,7 +37,7 @@ const App = () => {
       try {
         setIsLoading(true)
         const path = window.location.pathname;
-        const slug = path.split('/').filter(Boolean)[0] || 'mqinfo';
+        const slug = path.split('/').filter(Boolean)[0] || 'mqamtech';
         const response = await fetch(`${API_BASE_URL}/profiles/public/${slug}`)
         if (!response.ok) throw new Error('Erreur lors de la récupération du profil')
         const data = await response.json()
