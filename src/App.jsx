@@ -75,7 +75,7 @@ const App = () => {
       const path = window.location.pathname;
       const slug = path.split('/').filter(Boolean)[0] || 'mqinfo';
 
-      const response = await fetch(`${API_BASE_URL}/profiles/update/${slug}`, {
+      const response = await fetch(`${API_BASE_URL}profiles/update/${slug}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ const App = () => {
   const handleAddLink = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(`${API_BASE_URL}/links`, {
+      const response = await fetch(`${API_BASE_URL}links`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ const App = () => {
     e.preventDefault()
     try {
       const linkId = editingLink.id;
-      const response = await fetch(`${API_BASE_URL}/links/${linkId}`, {
+      const response = await fetch(`${API_BASE_URL}links/${linkId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -161,7 +161,7 @@ const App = () => {
   const handleDeleteLink = async (id) => {
     if (!window.confirm('Voulez-vous vraiment supprimer ce lien ?')) return;
     try {
-      const response = await fetch(`${API_BASE_URL}/links/${id}`, {
+      const response = await fetch(`${API_BASE_URL}links/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
