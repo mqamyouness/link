@@ -73,7 +73,7 @@ const App = () => {
     e.preventDefault()
     try {
       const path = window.location.pathname;
-      const slug = path.split('/').filter(Boolean)[0] || 'mqinfo';
+      const slug = path.split('/').filter(Boolean)[0];
 
       const response = await fetch(`${API_BASE_URL}/profiles/update/${slug}`, {
         method: 'PUT',
