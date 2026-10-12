@@ -3,14 +3,17 @@ import React, { useState, useEffect } from 'react'
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const PLATFORM_CONFIG = {
-  'GitHub': { icon: 'fa-brands fa-github', colorClass: 'github' },
-  'LinkedIn': { icon: 'fa-brands fa-linkedin', colorClass: 'linkedin' },
-  'Twitter': { icon: 'fa-brands fa-x-twitter', colorClass: 'twitter' },
+
   'Instagram': { icon: 'fa-brands fa-instagram', colorClass: 'instagram' },
   'Facebook': { icon: 'fa-brands fa-facebook', colorClass: 'facebook' },
   'WhatsApp': { icon: 'fa-brands fa-whatsapp', colorClass: 'whatsapp' },
   'TikTok': { icon: 'fa-brands fa-tiktok', colorClass: 'tiktok' },
   'YouTube': { icon: 'fa-brands fa-youtube', colorClass: 'youtube' },
+  'Google Maps': { icon: 'fa-solid fa-map-location-dot', colorClass: 'google-maps' },
+  'Website': { icon: 'fa-solid fa-globe', colorClass: 'website' },
+  'GitHub': { icon: 'fa-brands fa-github', colorClass: 'github' },
+  'LinkedIn': { icon: 'fa-brands fa-linkedin', colorClass: 'linkedin' },
+  'Twitter': { icon: 'fa-brands fa-x-twitter', colorClass: 'twitter' },
 };
 
 const App = () => {
@@ -248,7 +251,7 @@ const App = () => {
         .link-wrapper:hover .edit-btn, .link-wrapper:hover .delete-btn { opacity: 1; }
         .edit-btn:hover { background: rgba(0,0,0,0.15); }
         .delete-btn:hover { background: rgba(220,53,69,0.15); }
-        .instagram i { color: #e1306c; } .facebook i { color: #1877f2; } .whatsapp i { color: #25d366; } .tiktok i { color: #111; } .youtube i { color: #ff0000; }
+        .instagram i { color: #e1306c; } .facebook i { color: #1877f2; } .whatsapp i { color: #25d366; } .tiktok i { color: #111; } .youtube i { color: #ff0000; } .website i { color: #0D6EFD; } .google-maps i { color: #4285F4; }
         .footer { margin-top: 25px; color: rgba(255,255,255,.7); font-size: 12px; }
         .admin {
           position: fixed; right: 20px; bottom: 20px; width: 45px; height: 45px; border-radius: 50%;
@@ -462,20 +465,31 @@ const App = () => {
               const formData = new FormData(e.target);
               const username = formData.get('username');
               const password = formData.get('password');
+
+              const btn = e.target.querySelector('button[type="submit"]');
+              btn.disabled = true;
+              btn.textContent = 'Chargement...';
+
               try {
                 const response = await fetch(`${API_BASE_URL}/login`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ username, password }),
                 });
+
                 if (!response.ok) throw new Error('Identifiants incorrects');
+
                 const data = await response.json();
                 if (!data.access_token) throw new Error('Token non reçu');
+
                 localStorage.setItem('token', data.access_token);
                 setToken(data.access_token);
                 setIsLoginOpen(false);
               } catch (err) {
                 alert(err.message);
+              } finally {
+                btn.disabled = false;
+                btn.textContent = 'Se connecter';
               }
             }}>
               <input type="text" name="username" placeholder="Nom d'utilisateur" required />
